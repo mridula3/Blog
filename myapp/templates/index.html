@@ -24,7 +24,20 @@
         <div class="my-3">
             {{ object.content|truncatewords_html:50|safe}}
         </div>
+
+        <a href="#">Read more</a>
     </div>
 </div>
 {% endfor %}
+<nav>
+    <ul class="pagination">
+        <div class="mx-auto d-flex flex-row mt-5">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; First</a>
+            </li>
+            {% endif %}
+        </div>
+    </ul>
+</nav>
 {% endblock content %}

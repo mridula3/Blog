@@ -8,3 +8,4 @@ class Index(ListView):
     model = blog_post
     queryset = blog_post.objects.all().order_by('-date')
     template_name = 'index.html'
+    paginate_by = 2
