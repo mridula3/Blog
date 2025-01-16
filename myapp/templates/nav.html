@@ -1,6 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index' %}">Blog</a>
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'favicon2-32x32.png' %}" alt="logo">
+            Blogify</a>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -16,13 +20,17 @@
                 <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Sign Out</button>
+                        <button type="submit"
+                            class="btn btn-danger d-flex align-items-center justify-content-center">Sign Out<ion-icon
+                                name="log-out-outline" style="height: 25px; margin-left: 5px;"></ion-icon></button>
                     </form>
 
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+                    <a class="nav-link d-flex align-items-center justify-content-center"
+                        href="{% url 'login' %}"><ion-icon name="person-circle-outline"
+                            style="height: 25px; margin-right: 5px;"></ion-icon>Sign In</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
