@@ -3,8 +3,8 @@
     <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">
             <img src="{% static 'favicon2-32x32.png' %}" alt="logo">
-            Blogify</a>
-
+            Blogify
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
             aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -14,27 +14,60 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{% url 'featured' %}">Featured <span class="sr-only"></span></a>
                 </li>
+
+                {% if cat_menu %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Categories
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for item in cat_menu %}
+                        <a class="dropdown-item" href="{% url 'category' item|slugify %}">{{ item }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'add_article' %}">Add Post</a>
+                </li>
+                {% endif %}
+
+                <form class="d-flex align-items-center justify-content-start" method="POST" action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                        name="searched" style="width: 200px;;">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
             </ul>
+            <!-- <form class="d-flex align-items-center justify-content-start me-3">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                    style="width: 400px;;">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+
             <ul class="navbar-nav ms-auto">
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <form method="POST" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit"
-                            class="btn btn-danger d-flex align-items-center justify-content-center">Sign Out<ion-icon
-                                name="log-out-outline" style="height: 25px; margin-left: 5px;"></ion-icon></button>
+                            class="btn btn-info d-flex align-items-center justify-content-center mt-3">
+                            Sign Out<ion-icon name="log-out-outline"
+                                style="height: 25px; margin-left: 5px;"></ion-icon></button>
                     </form>
-
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center justify-content-center"
+                    <a class="nav-link d-flex align-items-center justify-content-start"
                         href="{% url 'login' %}"><ion-icon name="person-circle-outline"
                             style="height: 25px; margin-right: 5px;"></ion-icon>Sign In</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-                </li>
+                </li> -->
                 {% endif %}
             </ul>
         </div>

@@ -4,7 +4,6 @@
 
 <div class="container">
     <div class="row">
-
         <div class="col-md-6 col-12 mx-md-auto mx-3 mt-5 mb-3">
             <h2 class="fw-bold">Discover Engaging Stories and Insights</h2>
             <h5 class="text-muted">Where ideas meet storytelling - one blog at a time</h5>
@@ -17,7 +16,7 @@
         <div class="col-md-6 col-11 mx-md-auto mx-3 mt-3 mb-5">
             <h3 class="fw-bold">{{ object.title | upper}}</h3>
             <p class="text-muted">{{ object.date }}</p>
-            <p class="text-muted">Posted by {{ object.auhtor.username}}</p>
+            <p class="text-muted">Posted by {{ object.author.username}}, Category - {{ object.category }}</p>
             {% if object.likes.count == 1 %}
             <p class="text-muted">{{ object.likes.count }} person likes this post</p>
             {% else %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if searched %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-12 mx-md-auto mx-3 mt-5 mb-3">
+            <h2 class="fw-border">You searched for "{{ searched }}"</h2>
+            <!-- <h5 class="text-muted">Where ideas meet storytelling - one blog at a time</h5> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-11 mx-md-auto mx-3 mt-3 mb-5">
+            {% for blogs in blog %}
+            <h3 class="fw-bold">{{ blogs.title }}</h3>
+            <p class="text-muted">{{ blogs.date }}</p>
+            <p class="text-muted">Posted by {{ blogs.author.username}}, Category - {{ blogs.category }}</p>
+            {% if object.likes.count == 1 %}
+            <p class="text-muted">{{ blogs.likes.count }} person likes this post</p>
+            {% else %}
+            <p class="text-muted">{{ blogs.likes.count }} people like this post</p>
+            {% endif %}
+
+            <div class="my-3">
+                {{ blogs.content|truncatewords_html:20 | safe}}
+            </div>
+            <a href="{% url 'detail_article' blogs.id %}">Read more</a>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <h1>Hey! Wrong Search</h1>
+            {% endif %}
+            {% endblock content %}

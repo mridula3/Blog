@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-12 mx-md-auto mx-3 mt-5 mb-3">
+            {% if category_posts %}
+            <h2 class="fw-bold" style="color: rgb(10, 68, 92); text-transform: uppercase; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Category - {{ cats }}
+            </h2>
+
+        </div>
+    </div>
+    <div class="border-top mb-4"></div>
+
+    {% for object in category_posts %}
+    <div class="row">
+        <div class="col-md-6 col-11 mx-md-auto mx-3 mt-3 mb-5">
+            <h3 class="fw-bold">{{ object.title | upper}}</h3>
+            <p class="text-muted">{{ object.date }}</p>
+            <p class="text-muted">Posted by {{ object.author.username}}</p>
+            {% if object.likes.count == 1 %}
+            <p class="text-muted">{{ object.likes.count }} person likes this post</p>
+            {% else %}
+            <p class="text-muted">{{ object.likes.count }} people like this post</p>
+            {% endif %}
+
+            <div class="my-3">
+                {{ object.content|truncatewords_html:20 | safe}}
+            </div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'detail_article' object.id %}">Read more</a>
+            {% else %}
+            <a href="{% url 'login' %}">Read more
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <!-- <nav>
+        <ul class="pagination">
+            <div class="mx-auto d-flex flex-row mt-5">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">&laquo; First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous
+                    </a>
+                </li>
+                {% endif %}
+
+                <li class="page-item">
+                    <button class="page-link" disabled>
+                        Page {{ page_obj.number }} of {{page_obj.paginator.num_pages }}
+                    </button>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;
+                    </a>
+                </li>
+                {% endif %}
+            </div>
+        </ul>
+    </nav> -->
+</div>
+{% else %}
+<h1>Sorry this page does not exist</h1>
+
+{% endif %}
+
+{% endblock content %}
